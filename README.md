@@ -1,4 +1,4 @@
-# Avos (pro)
+# Avos (Instant OCR Translator HUD)
 
 Avos is a high-performance, PySide6-based instant translation tool designed for Linux. It acts as a transparent HUD (Heads-Up Display) that provides **real-time subtitle translation** for games, videos, movies, and any non-selectable text on your screen.
 

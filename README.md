@@ -2,6 +2,8 @@
 
 Avos is a high-performance, PySide6-based instant translation tool designed for Linux. It acts as a transparent HUD (Heads-Up Display) that provides **real-time subtitle translation** for games, videos, movies, and any non-selectable text on your screen.
 
+![Avos Screenshot](docs/Screenshot_20260531_215750.png)
+
 By "sniping" a specific area of your screen, Avos continuously monitors that region, extracts text using OCR (Optical Character Recognition), and overlays the translated text instantly, making it perfect for playing untranslated games or watching foreign media.
 
 > **Note:** Current version is optimized for **KDE Plasma (Wayland)** using **xcb** mode. Future versions will expand compatibility.

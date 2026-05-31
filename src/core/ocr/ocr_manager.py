@@ -1,0 +1,20 @@
+from src.core.ocr.tesseract_engine import TesseractEngine
+from src.core.ocr.easyocr_engine import EasyOCREngine
+
+class OCRManager:
+    def __init__(self):
+        self.engines = {
+            "Tesseract": TesseractEngine(),
+            "EasyOCR": EasyOCREngine()
+        }
+        self.current_engine_name = "Tesseract"
+
+    def set_engine(self, name: str):
+        if name in self.engines:
+            self.current_engine_name = name
+
+    def read_text(self, image_path: str) -> str:
+        engine = self.engines.get(self.current_engine_name)
+        if engine:
+            return engine.read_text(image_path)
+        return ""

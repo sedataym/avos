@@ -3,25 +3,24 @@ import time
 from PySide6.QtCore import QRect
 from PySide6.QtWidgets import QApplication
 from src.core.sniper.base_sniper import BaseSniper
+from src.config import SLURP_TEMP_PATH
 
 class SlurpSniper(BaseSniper):
     def get_region(self) -> QRect | None:
         """Selects a region on the screen using slurp."""
-        import tempfile
-        t_out = os.path.join(tempfile.gettempdir(), "slurp_final.txt")
-        if os.path.exists(t_out):
-            os.remove(t_out)
+        if os.path.exists(SLURP_TEMP_PATH):
+            os.remove(SLURP_TEMP_PATH)
         
         try:
             # Run slurp and write output to file
-            os.system(f"slurp -f '%x,%y %w,%h' > {t_out} 2>/dev/null &")
+            os.system(f"slurp -f '%x,%y %w,%h' > {SLURP_TEMP_PATH} 2>/dev/null &")
             start = time.time()
             output = ""
             while time.time() - start < 30: # 30 seconds timeout
                 QApplication.processEvents()
-                if os.path.exists(t_out) and os.path.getsize(t_out) > 0:
+                if os.path.exists(SLURP_TEMP_PATH) and os.path.getsize(SLURP_TEMP_PATH) > 0:
                     time.sleep(0.1)
-                    with open(t_out, "r") as f:
+                    with open(SLURP_TEMP_PATH, "r") as f:
                         output = f.read().strip()
                     break
                 time.sleep(0.1)
@@ -35,6 +34,6 @@ class SlurpSniper(BaseSniper):
         except Exception as e:
             print(f"Region Selection Error (slurp): {e}")
         finally:
-            if os.path.exists(t_out):
-                os.remove(t_out)
+            if os.path.exists(SLURP_TEMP_PATH):
+                os.remove(SLURP_TEMP_PATH)
         return None

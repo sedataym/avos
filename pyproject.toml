@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "avos"
+version = "0.1.0"
+authors = [
+  { name="Sedat Ayma" },
+]
+description = "High-performance, PySide6-based instant translation HUD for Linux."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "PySide6>=6.5.0",
+    "pytesseract>=0.3.10",
+    "easyocr>=1.7.0",
+    "deep-translator>=1.11.0",
+    "python-dotenv>=1.0.0",
+    "Pillow>=10.0.0",
+    "jeepney>=0.8.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/sedataym/avos"
+"Bug Tracker" = "https://github.com/sedataym/avos/issues"
+
+[project.scripts]
+avos = "src.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.setuptools.package-data]
+"src.ui" = ["assets/*.png"]

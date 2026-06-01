@@ -7,9 +7,7 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QComboBox, QPushButt
 from src.core.worker import OCRWorker
 from src.ui.result_popup import TransparentOverlay
 from src.core.sniper import SniperFactory
-
-SETTINGS_FILE = "settings.pkl"
-PRESETS_FILE = "presets.pkl"
+from src.config import OCR_ENGINES, TRANSLATION_ENGINES, LANGUAGES, SETTINGS_FILE, PRESETS_FILE
 
 class ControlPanel(QWidget):
     def __init__(self):
@@ -66,7 +64,7 @@ class ControlPanel(QWidget):
         tab_ocr_layout = QVBoxLayout(tab_ocr)
         tab_ocr_layout.addWidget(QLabel("OCR Engine:"))
         self.combo_ocr = QComboBox()
-        self.combo_ocr.addItems(["Tesseract", "EasyOCR"])
+        self.combo_ocr.addItems(OCR_ENGINES)
         self.combo_ocr.currentTextChanged.connect(self.worker.set_engine)
         self.combo_ocr.currentTextChanged.connect(self.save_settings)
         tab_ocr_layout.addWidget(self.combo_ocr)
@@ -78,18 +76,16 @@ class ControlPanel(QWidget):
         tab_translation_layout = QVBoxLayout(tab_translation)
         tab_translation_layout.addWidget(QLabel("Translation Engine:"))
         self.combo_translator = QComboBox()
-        self.combo_translator.addItems(["Google", "DeepL"])
+        self.combo_translator.addItems(TRANSLATION_ENGINES)
         self.combo_translator.currentTextChanged.connect(self.worker.set_translator)
         self.combo_translator.currentTextChanged.connect(self.save_settings)
         tab_translation_layout.addWidget(self.combo_translator)
-        
-        self.langs = {"Auto": "auto", "English": "en", "Turkish": "tr", "German": "de", "French": "fr", "Japanese": "ja", "Korean": "ko", "Chinese": "zh"}
         
         h_lang = QHBoxLayout()
         v_source = QVBoxLayout()
         v_source.addWidget(QLabel("Source Language:"))
         self.combo_source = QComboBox()
-        self.combo_source.addItems(list(self.langs.keys()))
+        self.combo_source.addItems(list(LANGUAGES.keys()))
         self.combo_source.setCurrentText("English")
         self.combo_source.currentTextChanged.connect(self.update_languages)
         v_source.addWidget(self.combo_source)
@@ -98,7 +94,7 @@ class ControlPanel(QWidget):
         v_target = QVBoxLayout()
         v_target.addWidget(QLabel("Target Language:"))
         self.combo_target = QComboBox()
-        self.combo_target.addItems(list(self.langs.keys()))
+        self.combo_target.addItems(list(LANGUAGES.keys()))
         self.combo_target.setCurrentText("Turkish")
         self.combo_target.currentTextChanged.connect(self.update_languages)
         v_target.addWidget(self.combo_target)
@@ -392,8 +388,8 @@ class ControlPanel(QWidget):
         """)
 
     def update_languages(self):
-        source_code = self.langs.get(self.combo_source.currentText(), "en")
-        target_code = self.langs.get(self.combo_target.currentText(), "tr")
+        source_code = LANGUAGES.get(self.combo_source.currentText(), "en")
+        target_code = LANGUAGES.get(self.combo_target.currentText(), "tr")
         self.worker.set_languages(source_code, target_code)
         self.save_settings()
 

@@ -6,8 +6,7 @@ from src.core.ocr.ocr_manager import OCRManager
 from src.core.translation.translator_manager import TranslatorManager
 from src.core.screenshot import ScreenshotFactory, ImageProcessor
 from src.core.socket_publisher import TranslationPublisher
-
-IMG_PATH = "/tmp/avos_snapshot.png"
+from src.config import IMG_PATH
 
 class OCRWorker(QThread):
     new_translation = Signal(str)

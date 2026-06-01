@@ -13,6 +13,7 @@ class TransparentOverlay(QWidget):
 
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.setAttribute(Qt.WA_ShowWithoutActivating)
+        self.setMouseTracking(True)
         self.resize(800, 200)
         
         self.layout = QVBoxLayout(self)
@@ -26,6 +27,7 @@ class TransparentOverlay(QWidget):
         self.bg_opacity = 180
         
         self.label = QLabel("Translation will appear here.")
+        self.label.setAttribute(Qt.WA_TransparentForMouseEvents)
         self.label.setWordWrap(True)
         self.label.setAlignment(Qt.AlignCenter)
         self.update_style()
@@ -94,13 +96,23 @@ class TransparentOverlay(QWidget):
             self._drag_start_geometry = self.geometry()
             if event.position().x() > self.width() - 20 and event.position().y() > self.height() - 20:
                 self._drag_mode = "resize"
+                self.setCursor(Qt.SizeFDiagCursor)
             else:
                 self._drag_mode = "move"
+                self.setCursor(Qt.SizeAllCursor)
             event.accept()
 
     def mouseMoveEvent(self, event):
-        if self._drag_mode is None or self._drag_start_pos is None:
+        if self._drag_mode is None:
+            if event.position().x() > self.width() - 20 and event.position().y() > self.height() - 20:
+                self.setCursor(Qt.SizeFDiagCursor)
+            else:
+                self.setCursor(Qt.SizeAllCursor)
             return
+
+        if self._drag_start_pos is None:
+            return
+
         delta = event.globalPosition().toPoint() - self._drag_start_pos
         if self._drag_mode == "move":
             self.move(self._drag_start_geometry.x() + delta.x(),
@@ -116,4 +128,8 @@ class TransparentOverlay(QWidget):
             self._drag_mode = None
             self._drag_start_pos = None
             self._drag_start_geometry = None
+            if event.position().x() > self.width() - 20 and event.position().y() > self.height() - 20:
+                self.setCursor(Qt.SizeFDiagCursor)
+            else:
+                self.setCursor(Qt.SizeAllCursor)
             event.accept()

@@ -37,8 +37,12 @@ OCR_LANG_MAPPING = {
     "es": {"tess": "spa", "easy": "es", "paddle": "es"}
 }
 
-SETTINGS_FILE = "settings.pkl"
-PRESETS_FILE = "presets.pkl"
+CONFIG_DIR = os.path.expanduser("~/.config/avos")
+if not os.path.exists(CONFIG_DIR):
+    os.makedirs(CONFIG_DIR, exist_ok=True)
+
+SETTINGS_FILE = os.path.join(CONFIG_DIR, "settings.pkl")
+PRESETS_FILE = os.path.join(CONFIG_DIR, "presets.pkl")
 
 # Temp Files
 TEMP_DIR = tempfile.gettempdir()

@@ -1,7 +1,7 @@
 import os
 import tempfile
 
-OCR_ENGINES = ["Tesseract", "EasyOCR", "PaddleOCR"]
+OCR_ENGINES = ["Tesseract", "EasyOCR"]  # "PaddleOCR" (uncomment when paddlepaddle is available)
 TRANSLATION_ENGINES = ["Google", "DeepL"]
 LANGUAGES = {
     "Auto": "auto",

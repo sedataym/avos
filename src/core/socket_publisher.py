@@ -3,16 +3,14 @@ import json
 import socket
 import threading
 import time
+from src.config import SOCKET_PATH
 
 
 class TranslationPublisher:
     """Unix domain socket server that broadcasts translation results to all connected clients.
 
-    Listens on /tmp/avos.sock and sends JSON messages (one per line) for each translation.
-    Clients can connect with: nc -U /tmp/avos.sock
+    Sends JSON messages (one per line) for each translation.
     """
-
-    SOCKET_PATH = "/tmp/avos.sock"
 
     def __init__(self):
         self._server_socket: socket.socket | None = None
@@ -27,21 +25,21 @@ class TranslationPublisher:
             return
 
         # Clean up stale socket file
-        if os.path.exists(self.SOCKET_PATH):
+        if os.path.exists(SOCKET_PATH):
             try:
-                os.unlink(self.SOCKET_PATH)
+                os.unlink(SOCKET_PATH)
             except OSError:
                 pass
 
         self._server_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        self._server_socket.bind(self.SOCKET_PATH)
+        self._server_socket.bind(SOCKET_PATH)
         self._server_socket.listen(5)
         self._server_socket.settimeout(1.0)  # Allows graceful shutdown via _running flag
 
         self._running = True
         self._thread = threading.Thread(target=self._accept_loop, daemon=True)
         self._thread.start()
-        print(f"TranslationPublisher: Listening on {self.SOCKET_PATH}")
+        print(f"TranslationPublisher: Listening on {SOCKET_PATH}")
 
     def stop(self) -> None:
         """Stop the server, close all client connections, and clean up the socket file."""
@@ -66,9 +64,9 @@ class TranslationPublisher:
                 pass
             self._server_socket = None
 
-        if os.path.exists(self.SOCKET_PATH):
+        if os.path.exists(SOCKET_PATH):
             try:
-                os.unlink(self.SOCKET_PATH)
+                os.unlink(SOCKET_PATH)
             except OSError:
                 pass
 

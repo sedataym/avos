@@ -66,12 +66,12 @@ Before running the application, ensure the following system packages are install
 ### Ubuntu / Debian
 ```bash
 sudo apt update
-sudo apt install tesseract-ocr slurp spectacle
+sudo apt install tesseract-ocr tesseract-ocr-rus tesseract-ocr-ara tesseract-ocr-heb tesseract-ocr-tur tesseract-ocr-vie tesseract-ocr-tha tesseract-ocr-spa slurp spectacle
 ```
 
 ### Arch Linux
 ```bash
-sudo pacman -S tesseract slurp spectacle
+sudo pacman -S tesseract tesseract-data-rus tesseract-data-ara tesseract-data-heb tesseract-data-tur tesseract-data-vie tesseract-data-tha tesseract-data-spa slurp spectacle
 ```
 
 ---

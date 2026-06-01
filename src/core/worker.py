@@ -6,8 +6,7 @@ from src.core.ocr.ocr_manager import OCRManager
 from src.core.translation.translator_manager import TranslatorManager
 from src.core.screenshot import ScreenshotFactory, ImageProcessor
 from src.core.socket_publisher import TranslationPublisher
-
-IMG_PATH = "/tmp/avos_snapshot.png"
+from src.config import IMG_PATH
 
 class OCRWorker(QThread):
     new_translation = Signal(str)
@@ -49,6 +48,7 @@ class OCRWorker(QThread):
     def set_languages(self, source, target):
         with self.lock:
             self.translator_manager.set_languages(source, target)
+            self.ocr_manager.set_language(source)
             self.last_text = ""
             print(f"OCRWorker: Languages: {source} -> {target}")
 

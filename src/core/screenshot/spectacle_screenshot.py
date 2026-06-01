@@ -3,26 +3,24 @@ import subprocess
 from PIL import Image
 from PySide6.QtCore import QRect
 from src.core.screenshot.base_screenshot import BaseScreenshot
+from src.config import FULL_SCREEN_TEMP_PATH
 
 class SpectacleScreenshot(BaseScreenshot):
-    def __init__(self):
-        self.full_screen_temp = "/tmp/avos_full_snap.png"
-
     def capture(self, rect: QRect, output_path: str) -> bool:
-        if os.path.exists(self.full_screen_temp):
-            os.remove(self.full_screen_temp)
+        if os.path.exists(FULL_SCREEN_TEMP_PATH):
+            os.remove(FULL_SCREEN_TEMP_PATH)
         
         try:
             # Use spectacle for KDE/Wayland
             subprocess.run(
-                ["spectacle", "-b", "-f", "-n", "-o", self.full_screen_temp],
+                ["spectacle", "-b", "-f", "-n", "-o", FULL_SCREEN_TEMP_PATH],
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True
             )
             
-            if not os.path.exists(self.full_screen_temp):
+            if not os.path.exists(FULL_SCREEN_TEMP_PATH):
                 return False
             
-            with Image.open(self.full_screen_temp) as full_img:
+            with Image.open(FULL_SCREEN_TEMP_PATH) as full_img:
                 crop = full_img.crop((
                     max(0, rect.x()), 
                     max(0, rect.y()),

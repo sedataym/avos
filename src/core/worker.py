@@ -48,6 +48,7 @@ class OCRWorker(QThread):
     def set_languages(self, source, target):
         with self.lock:
             self.translator_manager.set_languages(source, target)
+            self.ocr_manager.set_language(source)
             self.last_text = ""
             print(f"OCRWorker: Languages: {source} -> {target}")
 

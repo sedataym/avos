@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
 class TransparentOverlay(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("AVOS_TRANSLATION_OVERLAY")
+        self.setWindowTitle("UMAYOCR_TRANSLATION_OVERLAY")
         self.setWindowFlags(Qt.WindowStaysOnTopHint |
                             Qt.FramelessWindowHint |
                             Qt.WindowDoesNotAcceptFocus |

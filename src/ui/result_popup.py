@@ -33,15 +33,14 @@ class TransparentOverlay(QWidget):
         self.update_style()
         self.layout.addWidget(self.label)
         
+        self.hide_timer = QTimer(self)
+        self.hide_timer.setSingleShot(True)
+        self.hide_timer.timeout.connect(lambda: self.label.setText(""))
+
         self.set_mode(False)
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.raise_)
         self.timer.start(2000)
-
-        self.hide_timer = QTimer(self)
-        self.hide_timer.setSingleShot(True)
-        self.hide_timer.timeout.connect(lambda: self.label.setText(""))
-        self.hide_timer.start(10000)
 
         # Manual drag state (X11BypassWindowManagerHint bypasses WM)
         self._drag_mode = None  # "move" or "resize"
@@ -95,6 +94,11 @@ class TransparentOverlay(QWidget):
     def set_mode(self, scan):
         self.setAttribute(Qt.WA_TransparentForMouseEvents, scan)
         self.setCursor(Qt.ArrowCursor if scan else Qt.SizeAllCursor)
+        if scan:
+            self.hide_timer.start(10000)
+        else:
+            self.hide_timer.stop()
+            self.label.setText("Translation will appear here.")
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:

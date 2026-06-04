@@ -80,8 +80,8 @@ sudo pacman -S tesseract tesseract-data-rus tesseract-data-ara tesseract-data-he
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/sedataym/UmayOCR.git
-   cd UmayOCR
+   git clone https://github.com/sedataym/umayocr.git
+   cd umayocr
    ```
 
 2. **Create and activate a virtual environment:**

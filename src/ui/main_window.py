@@ -155,7 +155,7 @@ class ControlPanel(QWidget):
         h_bg_opacity.addWidget(self.bg_opacity_spin)
         tab_appearance_layout.addLayout(h_bg_opacity)
         tab_appearance_layout.addStretch()
-        self.tabs.addTab(tab_appearance, "Appearance")
+        self.tabs.addTab(tab_appearance, _("Appearance"))
         
         # --- Save Tab (Presets) ---
         tab_save = QWidget()

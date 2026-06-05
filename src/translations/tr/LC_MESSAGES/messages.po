@@ -118,6 +118,10 @@ msgstr "Ekran bölgesi seçin, OCR ile metni yakalayın,"
 msgid "and translate instantly with Google or DeepL."
 msgstr "ve Google veya DeepL ile anında çevirin."
 
+#: src/ui/main_window.py:161
+msgid "Appearance"
+msgstr "Görünüm"
+
 #: src/ui/main_window.py:204
 msgid "About"
 msgstr "Hakkında"
